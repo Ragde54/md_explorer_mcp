@@ -1,7 +1,9 @@
 from pathlib import Path
 
+
 class SecurityError(Exception):
     pass
+
 
 def gatekeeper(root_directory: Path, filename: str) -> Path:
     """
