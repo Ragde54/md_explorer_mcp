@@ -1,0 +1,53 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  quality-and-tests:
+    runs-on: ubuntu-latest
+    env:
+        NOTES_DIR: ./notes
+    steps:
+      # 1. Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # 3. Set up Python
+      - name: Set up Python
+        run: uv python install 3.12
+
+      # 4. Install dependencies
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      # 5. Run ruff (Linter)
+      - name: Run ruff
+        run: uv run ruff check .
+
+      # 6. Run mypy (Type Checker)
+      - name: Run mypy
+        run: uv run mypy src/
+
+      # 7. Run pytest with coverage
+      - name: Run tests with coverage
+        run: uv run pytest --cov=src/md_explorer_mcp
+
+  docker-build:
+    needs: quality-and-tests # Only if tests pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t md-explorer-mcp:${{ github.sha }} .

@@ -1,23 +1,14 @@
-from md_explorer_mcp.server import mcp
-from md_explorer_mcp.security import gatekeeper, SecurityError
 from mcp.shared.exceptions import McpError
-from mcp.types import ErrorData, INVALID_PARAMS
-from dotenv import load_dotenv
-from pathlib import Path
-import os
+from mcp.types import INVALID_PARAMS, ErrorData
 
-load_dotenv()
+from md_explorer_mcp.config import NOTES_PATH
+from md_explorer_mcp.security import SecurityError, gatekeeper
 
-notes_dir = os.getenv("NOTES_DIR")
-if not notes_dir:
-    raise ValueError("NOTES_DIR environment variable is not set")
-notes_path = Path(notes_dir).expanduser().resolve()
 
-@mcp.resource("notes:///{filename}")
 def get_note(filename: str) -> str:
     """Get the content of a markdown file."""
     try:
-        file_path = gatekeeper(notes_path, filename)
+        file_path = gatekeeper(NOTES_PATH, filename)
         return file_path.read_text()
     except SecurityError as e:
         raise McpError(ErrorData(code=INVALID_PARAMS, message=str(e)))

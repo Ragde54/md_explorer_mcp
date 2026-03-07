@@ -1,0 +1,9 @@
+services:
+  md-explorer:
+    build: .
+    stdin_open: true # keeps stdin open
+    tty: true # allocates a terminal
+    environment:
+      - NOTES_DIR=/app/notes
+    volumes:
+      - ./notes:/app/notes

@@ -18,8 +18,6 @@ def gatekeeper(root_directory: Path, filename: str) -> Path:
         raise SecurityError(f"Access denied: {filename}")
     if file.suffix != ".md":
         raise SecurityError(f"Access denied: {filename}")
-    if not file.exists():
-        raise SecurityError(f"Access denied: {filename}")
     if not file.is_file():
         raise SecurityError(f"Access denied: {filename}")
     return file
