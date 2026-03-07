@@ -9,3 +9,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Tool caches & coverage
+.coverage
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
