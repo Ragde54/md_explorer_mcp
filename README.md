@@ -1,4 +1,4 @@
-# 📝 Markdown Explorer MCP Server
+# Markdown Explorer MCP Server
 
 A local MCP (Model Context Protocol) server that exposes a folder of Markdown files to AI clients like Claude Desktop. Built as a **learning project** to explore MCP concepts — Tools, Resources, security patterns, testing, and CI/CD.
 
