@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
         NOTES_DIR: ./notes
+        PYTHONPATH: src
     steps:
       # 1. Checkout code
       - name: Checkout code
