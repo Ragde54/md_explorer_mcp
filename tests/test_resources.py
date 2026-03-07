@@ -2,8 +2,9 @@ from pathlib import Path
 
 import pytest
 from mcp.shared.exceptions import McpError
-from md_explorer_mcp.resources import get_note
 from pytest import MonkeyPatch
+
+from md_explorer_mcp.resources import get_note
 
 
 def test_get_note(tmp_path: Path, monkeypatch: MonkeyPatch) -> None:

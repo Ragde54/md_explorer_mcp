@@ -2,8 +2,9 @@ from pathlib import Path
 
 import pytest
 from mcp.shared.exceptions import McpError
-from md_explorer_mcp.tools import list_files, search_files
 from pytest import MonkeyPatch
+
+from md_explorer_mcp.tools import list_files, search_files
 
 # === List Files tool ===
 
