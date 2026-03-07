@@ -62,7 +62,7 @@ md-explorer-mcp/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/md-explorer-mcp.git
+git clone https://github.com/Ragde54/md_explorer_mcp.git
 cd md-explorer-mcp
 ```
 
