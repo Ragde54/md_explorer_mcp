@@ -11,6 +11,7 @@ def list_files() -> list[dict[str, str | int]]:
     List all markdown files in the notes directory.
     Returns a list of files with their filename and size in bytes.
     Use this tool first to discover what notes are available before reading them.
+    Note: only files directly inside the notes directory are listed, not subdirectories.
     """
     try:
         return [
@@ -27,11 +28,15 @@ def search_files(search_pattern: str) -> list[dict[str, str | list[str]]]:
     Returns a list of files with their matching lines.
     Pattern must be a valid Python regex string.
     Use this tool to find specific content across all notes without reading each file individually.
+    Note: only files directly inside the notes directory are searched, not subdirectories.
+    Results are capped at 10 matching files. If the limit is reached, a sentinel entry
+    {'filename': '__limit_reached__', 'matches': ['Result limit of 10 files reached.']} is appended.
     Example patterns:
     - 'neural networks?' matches 'neural network' or 'neural networks'
     - 'TODO|FIXME' matches lines containing either word
     - '^#' matches all markdown headings
     """
+    _RESULT_LIMIT = 10
 
     # Validate regex
     try:
@@ -41,6 +46,14 @@ def search_files(search_pattern: str) -> list[dict[str, str | list[str]]]:
 
     search_result: list[dict[str, str | list[str]]] = []
     for file in sorted(NOTES_PATH.glob("*.md"), key=lambda x: x.name):
+        if len(search_result) >= _RESULT_LIMIT:
+            search_result.append(
+                {
+                    "filename": "__limit_reached__",
+                    "matches": [f"Result limit of {_RESULT_LIMIT} files reached."],
+                }
+            )
+            break
         try:
             matches: list[str] = []
             content = file.read_text()

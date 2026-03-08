@@ -1,3 +1,3 @@
-from md_explorer_mcp.server import mcp
+from md_explorer_mcp.server import create_server
 
-mcp.run()
+create_server().run()

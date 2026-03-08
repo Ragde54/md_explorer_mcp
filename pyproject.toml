@@ -1,7 +1,7 @@
 [project]
 name = "md-explorer-mcp"
 version = "0.1.0"
-description = "Add your description here"
+description = "A local MCP server that exposes a folder of Markdown files to AI clients via Tools and Resources."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
